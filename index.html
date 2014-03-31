@@ -1,0 +1,152 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>countdown</title>
+    <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+
+      /* laziest reset in the history of ever */
+      *   { margin: 0; padding: 0; }
+      img { display: block; }
+
+      html {
+        font-family: 'Coming Soon', cursive, sans-serif;
+        -webkit-text-size-adjust: 100%;
+        color: #fff;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: normal;
+      }
+
+      .page {
+        display: table;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-size: cover;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-color: transparent;
+      }
+
+      .top,
+      .middle,
+      .bottom {
+        display: table-row;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .middle {
+        height: 20%;
+      }
+
+      .top,
+      .bottom {
+        height: 40%;
+      }
+
+      .wrap {
+        display: table;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      .inner {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      h2, h1 {
+        width: 80%;
+        margin: 0 auto;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="page">
+      <div class="top">
+        <div class="wrap"><div class="inner">
+          <h2>Ariel gets back in</h2>
+        </div></div>
+      </div>
+      <div class="middle">
+        <div class="wrap"><div class="inner">
+          <h1 id="timeRemaining"></h1>
+        </div></div>
+      </div>
+      <div class="bottom">
+        <div class="wrap"><div class="inner">
+          <h2>In the meantime, here is a poor (albeit cute) snuggling substitute.</h2>
+        </div></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+      function update() {
+
+        var el = document.getElementById('timeRemaining'),
+              // set range //
+            now    = new Date(),
+            target = Date.parse('April 18, 2014 11:15:00'),
+
+              // calculate interval //
+            d         = (target - now) * (1/1000) * (1/60) * (1/60) * (1/24),
+            d_rounded = Math.floor(d),
+            h         = (d - d_rounded) * 24,
+            h_rounded = Math.floor(h),
+            m         = (h - h_rounded) * 60,
+            m_rounded = Math.floor(m),
+            s         = (m - m_rounded) * 60,
+            s_rounded = Math.floor(s),
+
+              // build labels //
+            d_label = (d_rounded === 1) ? 'day'    : 'days',
+            h_label = (h_rounded === 1) ? 'hour'   : 'hours',
+            m_label = (m_rounded === 1) ? 'minute' : 'minutes',
+            s_label = (s_rounded === 1) ? 'second' : 'seconds',
+
+              // assemble string //
+            str = d_rounded + ' ' + d_label + ', '
+                + h_rounded + ' ' + h_label + ', '
+                + m_rounded + ' ' + m_label + ', and '
+                + s_rounded + ' ' + s_label + '.';
+
+        el.textContent = str;
+      }
+
+      function getCute(){
+        var w = window.innerWidth,
+            h = window.innerHeight,
+            url = 'http://placepuppy.it/' + w + '/' + h;
+
+        var el = document.getElementsByClassName('page')[0];
+
+        el.style.backgroundImage = 'url(' + url + ')';
+      }
+
+      function init() {
+        var updateInterval = window.setInterval(update, 1000);
+        var cuteInterval = window.setInterval(getCute, 60000);
+        update();
+        getCute();
+      }
+
+      init();
+
+    </script>
+  </body>
+</html>
